@@ -218,6 +218,28 @@ public class LL {
         tail = node;
         tail.next = null;
     }
+    //Merge Two sorted List
+    public static LL merge(LL first,LL second) {
+        LL ans = new LL();
+        Node f = first.head;
+        Node s = second.head;
+        while(f != null && s != null) {
+            if(f.value < s.value) {
+                ans.insertAtLast(f.value);
+                f = f.next;
+            } else {
+                ans.insertAtLast(s.value);
+                s = s.next;
+            }
+        } while(f!=null) {
+            ans.insertAtLast(f.value);
+            f = f.next;
+        } while(s!=null) {
+            ans.insertAtLast(s.value);
+            s = s.next;
+        }
+        return ans;
+    }
     private class Node {
         private int value;
         private Node next;
@@ -234,7 +256,7 @@ public class LL {
     }
 
     public static void main(String[] args) throws Exception {
-        LL node = new LL();
+        /*LL node = new LL();
         node.insertFirst(20);
         System.out.println(node.size);
         node.insertFirst(34);
@@ -284,8 +306,19 @@ public class LL {
         list.insertAtLast(3);
         list.display();
         list.duplicates();
-        list.display();
+        list.display();*/
+        LL first = new LL();
+        first.insertAtLast(1);
+        first.insertAtLast(3);
+        first.insertAtLast(5);
+        LL second = new LL();
+        second.insertAtLast(1);
+        second.insertAtLast(2);
+        second.insertAtLast(9);
+        second.insertAtLast(14);
 
+        LL ans = LL.merge(first,second);
+        ans.display();
 
     }
 
