@@ -203,7 +203,21 @@ public class LL {
         System.out.println("Value Not Found");
        return node;
     }
-
+    /**************Questions Leet Code   ************/
+    //Remove Duplicates From Sorted List
+    public void duplicates() {
+        Node node = head;
+        while(node.next!=null) {
+            if(node.value == node.next.value) {
+                node.next = node.next.next;
+                size--;
+            } else {
+                node = node.next;
+            }
+        }
+        tail = node;
+        tail.next = null;
+    }
     private class Node {
         private int value;
         private Node next;
@@ -259,6 +273,20 @@ public class LL {
         System.out.println(node1.find(18));
         node1.insertRec(88,2);
         node1.display();
+
+        LL list = new LL();
+        list.insertAtLast(1);
+        list.insertAtLast(1);
+        list.insertAtLast(2);
+        list.insertAtLast(2);
+        list.insertAtLast(3);
+        list.insertAtLast(3);
+        list.insertAtLast(3);
+        list.display();
+        list.duplicates();
+        list.display();
+
+
     }
 
 }
