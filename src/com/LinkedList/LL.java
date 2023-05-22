@@ -1,6 +1,22 @@
 package com.LinkedList;
 
 public class LL {
+
+    private class Node {
+        private int value;
+        private Node next;
+
+
+        public Node(int value) {
+            this.value = value;
+        }
+
+        public Node(int value, Node next) {
+            this.value = value;
+            this.next = next;
+        }
+
+    }
     private Node head;
     private Node tail;
     private int size;
@@ -218,7 +234,56 @@ public class LL {
         tail = node;
         tail.next = null;
     }
-    //Merge Two sorted List
+    //find Length of cycle
+    public int lengthCycle(Node head){
+        Node fast = head;
+        Node slow = head;
+
+        while(fast!=null && fast.next!=null){
+            fast = fast.next.next;
+            slow = slow.next;
+            Node temp = slow;
+            if(fast == slow) {
+                int length = 0;
+                do {
+                    temp =   temp.next;
+                    length++;
+            } while(temp!=slow);
+                    return length;
+        }
+
+    }
+        return 0;
+    }
+    public Node detectCycle(Node head) {
+        int length = 0;
+        Node fast = head;
+        Node slow = head;
+
+        while(fast!=null && fast.next!=null){
+            fast = fast.next.next;
+            slow = slow.next;
+            if(fast == slow) {
+                length = lengthCycle(slow);
+                break;
+            }
+        }
+        if(length == 0){
+            return null;
+        }
+        Node first = head;
+        Node second = slow;
+        while(length > 0) {
+            second = second.next;
+            length--;
+        }
+      while(first!=second){
+          first = first.next;
+          second = second.next;
+      }
+       return first;
+    }
+        //Merge Two sorted List
     public static LL merge(LL first,LL second) {
         LL ans = new LL();
         Node f = first.head;
@@ -240,21 +305,50 @@ public class LL {
         }
         return ans;
     }
-    private class Node {
-        private int value;
-        private Node next;
 
-
-        public Node(int value) {
-            this.value = value;
+    //Find the middle of a linked list
+    public Node middleNode(Node head) {
+        Node slow = head;
+        Node fast = head;
+        while(fast!=null && fast.next!=null){
+            fast = fast.next.next;
+            slow = slow.next;
         }
-
-        public Node(int value, Node next) {
-            this.value = value;
-            this.next = next;
+        return slow;
+    }
+    //Delete the middle of linked list and return head of the list
+    public Node deleteMiddle(Node head) {
+        Node slow = head;
+        Node fast = head;
+        Node temp = head;
+        Node prev = head;
+        Node temp1 = head;
+        if(fast.next == null){
+            return null;
         }
+        while(fast!=null && fast.next!=null) {
+            fast = fast.next.next;
+            prev = slow;
+            slow = slow.next;
+        }
+        prev.next = slow.next;
+        return temp1;
     }
 
+
+
+
+    public boolean hasCycle(Node head) {
+        Node fast = head;
+        Node slow = head;
+
+        while(fast!=null && fast.next!=null){
+            fast = fast.next.next;
+            slow = slow.next;
+            if(fast == slow) return true;
+        }
+        return false;
+    }
     public static void main(String[] args) throws Exception {
         /*LL node = new LL();
         node.insertFirst(20);
@@ -319,6 +413,16 @@ public class LL {
 
         LL ans = LL.merge(first,second);
         ans.display();
+
+
+        LL first1 = new LL();
+       first1.insertAtLast(1);
+        first1.insertAtLast(3);
+        Node f = first1.find(1);
+        Node f1 = f.next;
+
+       System.out.println(first1.hasCycle(f));
+
 
     }
 

@@ -18,17 +18,22 @@ public class InBuiltExample {
         System.out.println(stack.pop());
         System.out.println(stack.pop());
         System.out.println(stack.pop());
-        // System.out.println(stack.pop());
 
-        System.out.println("-----Queue Implementation-----");
         Queue<Integer> queue = new LinkedList<>();
         queue.add(3);
         queue.add(6);
         queue.add(5);
         queue.add(19);
         queue.add(1);
-        queue.add(23);
 
         System.out.println(queue.remove());
+        System.out.println(queue.remove());
+        System.out.println(queue.remove());
+        System.out.println(queue.remove());
+        System.out.println(queue.remove());
+
+
+
+
     }
 }
