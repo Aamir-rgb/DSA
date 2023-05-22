@@ -37,7 +37,7 @@ public class SLL {
         temp.next = node;
         node.next = null;
     }
-
+  //Display the contents of linked list
     public void display(){
         Node temp = head;
         if(temp == null){
@@ -49,14 +49,19 @@ public class SLL {
         }
         System.out.println("END");
     }
-public void deleteFirst() {
+
+    //To delete the first node of linked list
+     public void deleteFirst() {
         Node temp = head;
+        //Head == null means linked list is not present
         if(head == null){
             System.out.println("No nodes to delete");
         }
+        //Only first node to be deleted is present
         else if(head.next == null){
             head = null;
         }
+        //Entire Linked List is Present
         else {
             head = head.next;
         }
@@ -70,17 +75,24 @@ public void deleteLast() {
         }
         prev.next = null;
 }
-
+   //Delete the Last Node Of Linked List If It Has Particular Value
     public void deleteLastVal(int val) {
         Node temp = head;
         Node prev= head;
-        while(temp.next.val!=val){
-            prev = temp;
+        while(temp!=null) {
+            if (temp.next.val != val) {
+                System.out.println("Node to be deleted is not present");
+                break;
+            } else {
+                prev = temp;
             temp = temp.next;
+            prev.next.next = null;
         }
-        prev.next.next = null;
+        }
+
     }
 
+    //To delete the first node which has particular value in it.
     public void deleteFirstValue(int val) {
         Node temp = head;
         if(head == null){
@@ -88,6 +100,8 @@ public void deleteLast() {
         }
         else if(head.val == val){
             head = head.next;
+        } else {
+            System.out.println("The node which you are trying to delete is not present in the linked list");
         }
     }
    public void insertMid(int val1,int val2){
@@ -103,6 +117,35 @@ public void deleteLast() {
         System.out.println(prev.val);
        node.next=temp.next;
        prev.next = node;
+    }
+    //Calculate the Size Of Linked List
+    public int calcListSize(){
+        int count = 0;
+        Node temp = head;
+        while(temp!=null){
+            count++;
+            temp = temp.next;
+        }
+        return count;
+    }
+    //Insert At Particular Index Of Linked List
+    public void insertAtIndex(int index,int value){
+       int size = calcListSize();
+       if(index== 0) {
+           insertFirst(value);
+       } if (index == size-1){
+           insertLast(value);
+       } if(index!=0 && (index!=size-1)) {
+           Node node = new Node(value);
+           Node temp = head;
+           Node prev = head;
+           for(int i = 0; i < index;i++){
+               prev = temp;
+               temp = temp.next;
+           }
+           prev.next = node;
+           node.next = temp;
+       }
     }
     public void deleteMid(){
 
@@ -124,12 +167,22 @@ public void deleteLast() {
         s.insertMid(12,86);
         s.insertMid(25,86);
         s.insertFirst(86);
-        s.display();
-        System.out.println(s.find(86));
 
+        s.display();
+        s.deleteLast();
+        System.out.println(s.findIndex(86));
+        s.display();
+        s.deleteLastVal(98);
+        System.out.println("The size of the linked list is "+s.calcListSize());
+        s.display();
+        s.insertAtIndex(0,25);
+        s.display();
+        s.insertAtIndex(8,74);
+        s.display();
     }
 
-    public List<Integer> find(int val){
+    //Find The Index Of A Particular Node In Linked List
+    public List<Integer> findIndex(int val){
         Node temp = head;
         int count = 0;
         List<Integer> list = new ArrayList<>();
@@ -142,6 +195,7 @@ public void deleteLast() {
         }
         return list;
     }
+    //This code needs modification
     public void deleteAny(int val) {
         Node temp = head;
         Node temp1 = head;
