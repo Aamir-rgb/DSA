@@ -7,6 +7,7 @@ import java.util.List;
 
 public class SLL {
     private Node head;
+    private Node tail;
     private class Node {
         private int val;
         private Node next;
@@ -85,8 +86,8 @@ public void deleteLast() {
                 break;
             } else {
                 prev = temp;
-            temp = temp.next;
-            prev.next.next = null;
+                temp = temp.next;
+                prev.next.next = null;
         }
         }
 
@@ -152,33 +153,49 @@ public void deleteLast() {
     }
     public static void main(String[] args) {
         SLL s = new SLL();
-        s.insertFirst(11);
-        s.insertFirst(12);
-        s.insertFirst(94);
-        s.insertFirst(86);
-        s.insertLast(25);
-        s.insertFirst(49);
-        s.insertLast(89);
+        s.insertFirst(1);
+        s.insertLast(1);
+        s.insertFirst(2);
+        s.insertLast(2);
+        s.insertLast(9);
+        //s.insertMid(5);
+        //s.insertFirst(12);
+        //s.insertFirst(94);
+//        s.insertFirst(86);
+//        s.insertLast(25);
+//        s.insertFirst(49);
+//        s.insertLast(86);
         s.display();
-        s.insertMid(86,78);
-        //s.deleteFirstValue(18);
-        //s.deleteLastVal(89);
-        //s.deleteAny(94);
-        s.insertMid(12,86);
-        s.insertMid(25,86);
-        s.insertFirst(86);
-
+      //  s.isPalindrome();
+//        s.insertMid(86,78);
+//        //s.deleteFirstValue(18);
+//        //s.deleteLastVal(89);
+//        //s.deleteAny(94);
+//        s.insertMid(12,86);
+//        s.insertMid(25,86);
+       // s.insertFirst(86);
+//
+//        s.display();
+//        s.deleteLast();
+//        System.out.println(s.findIndex(86));
+//        s.display();
+//        s.deleteLastVal(98);
+//        System.out.println("The size of the linked list is "+s.calcListSize());
+//        s.display();
+//        s.insertAtIndex(0,25);
+//        s.display();
+//        s.insertAtIndex(8,74);
         s.display();
-        s.deleteLast();
-        System.out.println(s.findIndex(86));
-        s.display();
-        s.deleteLastVal(98);
-        System.out.println("The size of the linked list is "+s.calcListSize());
-        s.display();
-        s.insertAtIndex(0,25);
-        s.display();
-        s.insertAtIndex(8,74);
-        s.display();
+  //      s.reverseList();
+//        s.display();
+//      s.deleteAny(7);
+       s.display();
+       s.removeDuplicates();
+       s.display();
+//        s.deleteAny(25);
+//        s.display();
+//        s.deleteAny(86);
+//        s.display();
     }
 
     //Find The Index Of A Particular Node In Linked List
@@ -195,19 +212,99 @@ public void deleteLast() {
         }
         return list;
     }
-    //This code needs modification
-    public void deleteAny(int val) {
-        Node temp = head;
-        Node temp1 = head;
-        if (temp == null) {
-            System.out.println("No node to be deleted");
+    //Recursion Reverse
+    private void reverse(Node node) {
+        if(node == tail) {
+            tail = head;
+            return;
         }
-            if (temp.val == val) {
-                deleteFirstValue(val);
-            } if(temp.val==val && temp.next!=null){
-//               / deleteMid(val);
-//                temp
-        }
-        }
+        reverse(node.next);
+
+        tail.next = node;
+        tail = node;
+        tail.next = null;
     }
 
+    //In Place Reversal Of A Linked List
+    public void reverse () {
+        int size = calcListSize();
+        if(size < 2){
+            return;
+        }
+        Node prev = null;
+        Node pres = head;
+        Node nextNode = pres.next;
+        while(pres!=null){
+            pres.next = prev;
+            prev = pres;
+            pres = nextNode;
+            if(nextNode.next!=null){
+                nextNode = nextNode.next;
+            }
+        }
+        head = prev;
+    }
+
+    //Remove Duplicates From Linked List
+    public Node removeDuplicates() {
+        List<Integer> al = new ArrayList<>();
+        Node temp = head;
+        Node prev = temp;
+        int count = 0;
+        while(temp!=null) {
+            if(!al.contains(temp.val) && count < 1) {
+             al.add(temp.val);
+            }
+            if(al.contains(temp.val)) {
+                count++;
+            }
+//            if(al.contains(temp.val)) {
+//                prev.next = temp.next;
+//            }
+            temp = temp.next;
+        }
+        System.out.println(al);
+        return head;
+    }
+
+
+    //Delete the Middle Node
+    public void deleteAny(int val) {
+        if (head.val == val) {
+            deleteFirst();
+        }
+        Node temp = head;
+        Node prev = temp;
+        while (temp.next != null) {
+            if (temp.next.val == val && temp.next.next != null) {
+                temp.next = temp.next.next;
+                temp = temp.next;
+            }
+            if (temp.val == val) {
+                deleteLast();
+            }
+        }
+        if(head.val == val) {
+            deleteFirst();
+        }
+    }
+    public boolean isPalindrome() {
+        Node temp = head;
+        List<Integer> al = new ArrayList<>();
+        String str = "";
+        String str1 = "";
+        boolean b = false;
+        while(this.head !=null){
+            al.add(this.head.val);
+            this.head = this.head.next;
+        }
+        for(int i = 0;i < al.size();i++){
+            str = Integer.toString(al.get(i));
+        }
+        for(int j = al.size()-1;j >=0;j--){
+            str1 = Integer.toString(al.get(j));
+        }
+        if(str.equals(str1)) b = true;
+        return b;
+    }
+    }
