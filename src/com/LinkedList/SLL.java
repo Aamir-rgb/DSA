@@ -153,11 +153,17 @@ public void deleteLast() {
     }
     public static void main(String[] args) {
         SLL s = new SLL();
-        s.insertFirst(1);
-        s.insertLast(1);
-        s.insertFirst(2);
-        s.insertLast(2);
-        s.insertLast(9);
+        //s.insertFirst(9);
+//        s.insertFirst(1);
+//        s.insertLast(1);
+//        s.insertFirst(2);
+//        s.insertLast(2);
+//       // s.insertLast(9);
+//        s.insertLast(9);
+        s.insertFirst(9);
+        s.insertFirst(9);
+        s.insertFirst(9);
+        s.insertFirst(9);
         //s.insertMid(5);
         //s.insertFirst(12);
         //s.insertFirst(94);
@@ -252,17 +258,18 @@ public void deleteLast() {
         Node prev = temp;
         int count = 0;
         while(temp!=null) {
-            if(!al.contains(temp.val) && count < 1) {
-             al.add(temp.val);
-            }
             if(al.contains(temp.val)) {
-                count++;
+                prev.next = temp.next;
+
             }
-//            if(al.contains(temp.val)) {
-//                prev.next = temp.next;
-//            }
+           else {
+               al.add(temp.val);
+             prev = temp;
+
+            }
             temp = temp.next;
         }
+      prev.next = null;
         System.out.println(al);
         return head;
     }
